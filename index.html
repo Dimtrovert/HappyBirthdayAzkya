@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OUR STORY - Netflix Style</title>
+    <title>A Special Day</title>
     <style>
-        /* RESET & NETFLIX THEME VARIABLES */
+        /* =========================================
+           1. RESET & VARIABLES
+           ========================================= */
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
         :root {
-            --bg: #141414; /* Netflix standard background */
+            /* Palette Netflix Theme */
+            --bg: #141414; 
             --paper: #ffffff;
             --muted: #a3a3a3;
             --net-red: #E50914;
             --card-bg: #181818;
-            --shadow: rgba(0,0,0,0.75);
+            
+            /* Palette Cinematic Pink (Entrance) */
+            --elegant-pink: #ff4fa8;
+            --soft-pink: #ffd7e6;
+            --dark-plum: #170a10; 
         }
 
         body {
@@ -23,48 +31,110 @@
             overflow-x: hidden;
         }
 
-        /* OVERLAY PEMBUKA - Kunci Interaksi Audio */
+        /* =========================================
+           2. OVERLAY PEMBUKA (CINEMATIC PINK STORY)
+           ========================================= */
         #intro-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #000;
+            background-color: var(--dark-plum); 
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            text-align: center;
         }
 
-        #intro-overlay h2 {
-            color: var(--net-red);
-            font-weight: 800;
+        /* Vektor Tulip Kompleks */
+        .tulip-svg {
+            width: 110px;
+            height: 110px;
             margin-bottom: 30px;
-            font-size: clamp(1.5rem, 5vw, 2.5rem);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            stroke-dasharray: 400; 
+            stroke-dashoffset: 400;
+            animation: 
+                drawTulip 2.5s ease-out forwards,
+                bloomTulip 1.5s 2.5s ease-in-out forwards;
         }
+
+        @keyframes drawTulip {
+            to { stroke-dashoffset: 0; }
+        }
+
+        @keyframes bloomTulip {
+            50% { 
+                filter: drop-shadow(0 0 20px var(--elegant-pink)); 
+                transform: scale(1.08); 
+            }
+            100% { 
+                filter: drop-shadow(0 0 10px var(--elegant-pink)); 
+                transform: scale(1); 
+                fill: rgba(255, 79, 168, 0.15); 
+            }
+        }
+
+        /* Tipografi Storytelling */
+        .story-line {
+            color: var(--soft-pink);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        .story-highlight {
+            color: var(--elegant-pink);
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-top: 15px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(255, 79, 168, 0.4);
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        /* Timing Munculnya Teks & Tombol */
+        .seq-1 { animation: fadeUp 1s 2s ease-out forwards; }
+        .seq-2 { animation: fadeUp 1s 3.5s ease-out forwards; }
+        .seq-3 { animation: fadeUp 1s 5s ease-out forwards; }
 
         #open-btn {
-            padding: 12px 40px;
-            font-size: 1.2rem;
+            padding: 12px 45px;
+            font-size: 1.1rem;
             background: transparent;
-            border: 2px solid var(--paper);
-            color: var(--paper);
-            border-radius: 4px;
+            border: 1px solid var(--elegant-pink);
+            color: var(--elegant-pink);
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeUp 1s 6.5s ease-out forwards;
         }
 
         #open-btn:hover {
-            background: var(--paper);
-            color: #000;
+            background: var(--elegant-pink);
+            color: var(--dark-plum);
+            box-shadow: 0 0 20px rgba(255, 79, 168, 0.6);
         }
 
-        /* HERO SECTION - NETFLIX STYLE */
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================================
+           3. HERO SECTION (NETFLIX STYLE)
+           ========================================= */
         .netflix-hero {
             position: relative;
             height: 100vh;
@@ -75,7 +145,6 @@
             overflow: hidden;
         }
 
-        /* Latar Belakang Video Absolut */
         .hero-bg-video {
             position: absolute;
             top: 0;
@@ -86,7 +155,6 @@
             z-index: -1;
         }
 
-        /* Gradien Gelap & Blur untuk Keterbacaan (Seperti UI Netflix) */
         .hero-vignette {
             position: absolute;
             top: 0;
@@ -97,17 +165,14 @@
             background: 
                 linear-gradient(to right, rgba(20,20,20,0.9) 0%, rgba(20,20,20,0.4) 50%, transparent 100%),
                 linear-gradient(to top, var(--bg) 0%, transparent 20%);
-            /* Efek blury di belakang layar secara halus */
             backdrop-filter: blur(2px);
         }
 
-        /* Konten Hero (Kiri Rata) */
         .hero-content {
             max-width: 600px;
             z-index: 2;
         }
 
-        /* Logo Film / Judul Besar */
         .hero-content h1 {
             font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 900;
@@ -118,7 +183,6 @@
             letter-spacing: -2px;
         }
 
-        /* Badge Top 10 Hari Ini */
         .top-badge {
             display: flex;
             align-items: center;
@@ -152,7 +216,6 @@
             max-width: 90%;
         }
 
-        /* Tombol Netflix */
         .hero-buttons {
             display: flex;
             gap: 15px;
@@ -172,30 +235,12 @@
             transition: transform 0.2s, background-color 0.2s;
         }
 
-        .btn-play {
-            background-color: white;
-            color: black;
-        }
+        .btn-play { background-color: white; color: black; }
+        .btn-play:hover { background-color: rgba(255,255,255,0.7); }
+        .btn-info { background-color: rgba(109, 109, 110, 0.7); color: white; }
+        .btn-info:hover { background-color: rgba(109, 109, 110, 0.4); }
+        .hero-buttons svg { width: 24px; height: 24px; }
 
-        .btn-play:hover {
-            background-color: rgba(255,255,255,0.7);
-        }
-
-        .btn-info {
-            background-color: rgba(109, 109, 110, 0.7);
-            color: white;
-        }
-
-        .btn-info:hover {
-            background-color: rgba(109, 109, 110, 0.4);
-        }
-
-        .hero-buttons svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* Label usia pojok kanan */
         .age-rating {
             position: absolute;
             right: 0;
@@ -207,68 +252,108 @@
             font-weight: bold;
         }
 
-        /* HORIZONTAL SCROLL WRAPPER */
-        .horizontal-wrapper {
-            height: 400vh; 
+        /* =========================================
+           4. CINEMATIC MONTAGE (KEN BURNS EFFECT)
+           ========================================= */
+        .montage-wrapper {
             position: relative;
+            min-height: 100vh;
+            width: 100vw;
             background-color: var(--bg);
-        }
-
-        .horizontal-container {
-            position: sticky;
-            top: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
             overflow: hidden;
-            background-color: var(--bg);
-        }
-
-        .gallery {
             display: flex;
-            gap: 2vw; 
-            padding: 0 4vw;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 18vh 0 6vh;
         }
 
-        .card {
-            width: 300px;
-            height: 170px; 
-            background: var(--card-bg);
-            border-radius: 4px;
-            flex-shrink: 0;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.3s ease, z-index 0.3s ease;
-        }
-
-        .card:hover {
-            transform: scale(1.15);
+        .montage-title {
+            position: absolute;
+            top: 4%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: clamp(1.2rem, 2.2vw, 1.8rem);
+            color: #ffffff;
             z-index: 10;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            background: rgba(20, 20, 20, 0.6);
+            padding: 14px 24px;
+            border-radius: 999px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
         }
 
-        .card img {
+        .montage-title span {
+            font-weight: 800;
+            color: var(--soft-pink);
+        }
+
+        .montage-container {
+            position: relative;
+            width: min(85vw, 940px);
+            aspect-ratio: 4 / 3;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+            background-color: rgba(15, 15, 15, 0.95);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(8px);
+        }
+
+        .montage-img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            opacity: 0;
+            transform: scale(0.98);
+            transition: opacity 1s ease, transform 1s ease;
+            z-index: 1;
         }
 
-        /* OUTRO SECTION */
+        .montage-img.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 2;
+        }
+
+        .montage-img.fade-out {
+            opacity: 0;
+            transform: scale(0.98);
+            z-index: 1;
+        }
+
+        .montage-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(20,20,20,0.08), rgba(0,0,0,0.35));
+            pointer-events: none;
+        }
+
+        /* =========================================
+           5. OUTRO SECTION
+           ========================================= */
         .outro {
-            height: 100vh;
+            min-height: 60vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            justify-content: flex-start;
+            align-items: flex-start;
             text-align: center;
-            padding: 20px;
+            padding: 36px 20px 20px;
             background-color: var(--bg);
         }
         
         .outro h2 {
+            margin: 0 auto;
+            max-width: 780px;
             font-weight: 300;
             color: var(--paper);
             line-height: 1.4;
+            font-size: clamp(1.8rem, 2.5vw, 2.6rem);
         }
     </style>
 </head>
@@ -277,14 +362,28 @@
     <audio id="bgm" src="lagu-manis.mp3" loop></audio>
 
     <div id="intro-overlay">
-        <h2>Siap Memulai?</h2>
-        <button id="open-btn">Masuk</button>
+        
+        <svg class="tulip-svg" viewBox="0 0 100 100" fill="none" stroke="var(--elegant-pink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M50 90 C 45 70, 55 60, 50 45" />
+            <path d="M48 75 C 20 70, 15 40, 25 35 C 30 45, 45 55, 49 60" />
+            <path d="M51 80 C 70 75, 85 50, 75 45 C 70 55, 60 65, 52 68" />
+            <path d="M50 45 C 30 45, 30 20, 35 15 C 40 25, 45 35, 50 40 C 55 35, 60 25, 65 15 C 70 20, 70 45, 50 45 Z" />
+            <path d="M38 22 C 40 15, 45 10, 50 12" />
+            <path d="M62 22 C 60 15, 55 10, 50 12" />
+            <path d="M50 40 C 48 30, 50 15, 50 15" />
+        </svg>
+
+        <p class="story-line seq-1">Hari ini, dunia sedang merayakan salah satu orang yang paling pantas untuk bahagia.</p>
+        <p class="story-line seq-2">Hanya sebuah pesan singkat untuk seseorang yang sedang bertambah usia,</p>
+        <p class="story-line seq-3">Bukan lagi 'kita', tapi doaku untukmu tidak pernah berubah,</p>
+        <h2 class="story-highlight seq-3">SELAMAT ULANG TAHUN KE-19</h2>
+        
+        <button id="open-btn">HAII!!</button>
     </div>
 
     <section class="netflix-hero">
         <video class="hero-bg-video" autoplay loop muted playsinline poster="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1600&q=80">
             <source src="momen-romantis-bg.mp4" type="video/mp4">
-            <source src="momen-romantis-bg.mov" type="video/quicktime">
         </video>
         
         <div class="hero-vignette"></div>
@@ -292,19 +391,19 @@
         <div class="hero-content">
             <div class="top-badge">
                 <span class="top-10-icon">TOP<br>10</span>
-                <span class="top-10-text">Momen No. 1 di Hati Hari Ini</span>
+                <span class="top-10-text">OUR MEMORIES</span>
             </div>
             
             <h1 class="movie-title">HAPPY BIRTHDAY</h1>
             
             <p class="movie-description">
-                I LOVE HER SO MUCHH HAPPY BIRTHDAY
+                Selamat ulang tahun. Meskipun jalan kita sudah berbeda, aku selalu berharap kamu dikelilingi oleh hal-hal baik, kebahagiaan, dan kedamaian. Semoga tahun di umur yang ke-19 membawa banyak hal luar biasa untuk Salwa Nurul Azkya Syakieb, semoga semua yang kamu impikan menjadi kenyataan i'll always pray for you sayangg.
             </p>
             
             <div class="hero-buttons">
                 <button class="btn-play" id="btn-play">
                     <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
-                    Putar Cerita
+                    Lihat Memori
                 </button>
                 <button class="btn-info" id="btn-info">
                     <svg viewBox="0 0 24 24"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="currentColor"/></svg>
@@ -316,28 +415,14 @@
         <div class="age-rating">18+</div>
     </section>
 
-    <div class="horizontal-wrapper" id="cerita">
-        <div class="horizontal-container">
-            <h3 style="position: absolute; top: 10%; left: 4vw; font-size: 1.5rem; color: #e5e5e5; z-index: 5;">Karena kamu suka <span style="font-weight: bold; color: white;">Menghabiskan Waktu Bersama</span></h3>
-            <div class="gallery">
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1518199268815-95a17b806141?w=500&q=80" alt="Foto 1">
-                </div>
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=500&q=80" alt="Foto 2">
-                </div>
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=500&q=80" alt="Foto 3">
-                </div>
-                <div class="card">
-                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&q=80" alt="Foto 4">
-                </div>
+    <div class="montage-wrapper" id="cerita">
+        <h3 class="montage-title">OUR STORY <span><3</span></h3>
+        <div class="montage-container" id="montage-container">
             </div>
-        </div>
     </div>
 
     <section class="outro" id="outro">
-        <h2>Bersambung ke episode berikutnya...<br>Aku sayang kamu.</h2>
+        <h2>Terima kasih untuk semuanya...<br>Semoga kamu selalu bahagia.</h2>
     </section>
 
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
@@ -345,7 +430,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
-        // 1. INISIALISASI LENIS
+        // 1. Inisialisasi Smooth Scroll Lenis
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -353,7 +438,7 @@
             smooth: true,
         });
 
-        lenis.stop(); // Kunci scroll awal
+        lenis.stop(); // Kunci scroll di layar awal
 
         function raf(time) {
             lenis.raf(time);
@@ -361,26 +446,27 @@
         }
         requestAnimationFrame(raf);
 
-        // 2. REGISTRASI SCROLLTRIGGER
+        // 2. Registrasi Plugin GSAP
         gsap.registerPlugin(ScrollTrigger);
 
-        // 3. LOGIKA UNLOCK & AUDIO (Persis dari index git.html)
+        // 3. Logika "Buka Pesan"
         const openBtn = document.getElementById('open-btn');
         const overlay = document.getElementById('intro-overlay');
         const bgm = document.getElementById('bgm');
 
         openBtn.addEventListener('click', () => {
-            // Logika pemutaran musik yang simpel dan andal
             try {
                 bgm.play();
             } catch (e) {
-                console.log("Audio file belum siap atau diblokir browser.");
+                console.log("Audio terblokir browser.");
             }
 
             lenis.start(); 
+            
             gsap.to(overlay, {
                 opacity: 0,
-                duration: 0.8,
+                duration: 1.2,
+                ease: "power2.inOut",
                 onComplete: () => {
                     overlay.style.display = "none";
                     gsap.from(".hero-content", { opacity: 0, x: -50, duration: 1.5, ease: "power3.out" });
@@ -388,7 +474,7 @@
             });
         });
 
-        // 4. INTERAKSI TOMBOL NETFLIX
+        // 4. Interaksi Tombol Netflix
         document.getElementById('btn-play').addEventListener('click', () => {
             lenis.scrollTo('#cerita', { duration: 1.5 });
         });
@@ -397,29 +483,54 @@
             lenis.scrollTo('#outro', { duration: 2 });
         });
 
-        // 5. HORIZONTAL SCROLL
-        const gallery = document.querySelector('.gallery');
-        function getScrollAmount() {
-            let galleryWidth = gallery.scrollWidth;
-            return -(galleryWidth - window.innerWidth);
+        // 5. LOGIKA CINEMATIC MONTAGE (FADE IN / OUT + KEN BURNS)
+        const montageContainer = document.getElementById('montage-container');
+        
+        // Memasukkan 36 foto secara otomatis
+        const photos = [];
+        for (let i = 1; i <= 36; i++) {
+            // Pastikan Anda sudah me-rename foto menjadi foto1.jpeg, foto2.jpeg, dst di folder repositori Anda
+            photos.push(`kenangan/foto${i}.jpeg`);
         }
 
-        const tween = gsap.to(gallery, {
-            x: getScrollAmount,
-            ease: "none"
+        photos.forEach((src) => {
+            const img = document.createElement('img');
+            img.src = src; 
+            img.className = 'montage-img';
+            
+            // Fallback sementara jika foto belum Anda masukkan (mencegah error visual saat diuji)
+            img.onerror = function() {
+                this.src = 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=800&q=80';
+            };
+            
+            montageContainer.appendChild(img);
         });
 
-        ScrollTrigger.create({
-            trigger: ".horizontal-wrapper",
-            start: "top top", 
-            end: () => `+=${getScrollAmount() * -1}`, 
-            pin: ".horizontal-container", 
-            animation: tween,
-            scrub: 1, 
-            invalidateOnRefresh: true 
-        });
+        const montageImages = document.querySelectorAll('.montage-img');
+        let currentImageIndex = 0;
 
-        // 6. VIDEO FALLBACK HANDLING (Menjaga agar layar tidak blank jika video gagal muat)
+        function playMontage() {
+            if (montageImages.length === 0) return;
+
+            const previousIndex = currentImageIndex === 0 ? montageImages.length - 1 : currentImageIndex - 1;
+            montageImages[previousIndex].classList.remove('active');
+            montageImages[previousIndex].classList.add('fade-out');
+
+            setTimeout(() => {
+                montageImages[previousIndex].classList.remove('fade-out');
+            }, 1000);
+
+            montageImages[currentImageIndex].classList.add('active');
+            currentImageIndex = (currentImageIndex + 1) % montageImages.length;
+        }
+
+        // Picu foto pertama secara langsung dengan sedikit penundaan
+        setTimeout(playMontage, 500);
+
+        // Ganti foto setiap 4 detik untuk memberikan ritme romantis yang santai
+        setInterval(playMontage, 4000);
+
+        // 6. Penanganan Error Jika Video Latar Gagal Dimuat
         const bgVideo = document.querySelector('.hero-bg-video');
         const hero = document.querySelector('.netflix-hero');
         
