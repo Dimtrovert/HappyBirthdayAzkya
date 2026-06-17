@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 20 - Happy Birthday</title>
+    <style>
+        /* RESET & PALETTE - BRIGHT ELEGANT PINK */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root{
+            --bg: #231b1e; /* deep warm background */
+            --paper: #fff6f8; /* soft cream for text */
+            --muted: #b88f98; /* muted rose for secondary text */
+            --muted-light: #e9d3d8; /* lighter muted for descriptions */
+            --accent: #ffb6d0; /* bright elegant pink */
+            --accent-strong: #ff86b6; /* stronger pink for accents */
+            --card-bg: #2e2327; /* card background */
+            --overlay-bg: rgba(35,27,30,0.95);
+            --shadow: rgba(0,0,0,0.45);
+        }
+
+        /* Alternative themes */
+        :root[data-theme="soft"]{
+            --bg: #f8f5f7; /* very soft warm */
+            --paper: #2b1920; /* deep text on light */
+            --muted: #bfa0a8;
+            --muted-light: #8f6f78;
+            --accent: #ffd7e6; /* soft pink */
+            --accent-strong: #ffb3cf;
+            --card-bg: #fff0f3;
+            --overlay-bg: rgba(248,245,247,0.95);
+            --shadow: rgba(43,25,32,0.06);
+        }
+
+        :root[data-theme="vibrant"]{
+            --bg: #1b0f17; /* darker base */
+            --paper: #fff8fb;
+            --muted: #ff8fb3;
+            --muted-light: #ffc9dd;
+            --accent: #ff4fa8; /* vibrant fuchsia */
+            --accent-strong: #ff2f8f;
+            --card-bg: #2a0f1a;
+            --overlay-bg: rgba(27,15,23,0.96);
+            --shadow: rgba(255,79,168,0.08);
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--paper);
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* OVERLAY PEMBUKA - The Unlock Ritual */
+        #intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #1a1515;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        #intro-overlay h2 {
+            color: var(--accent);
+            font-weight: 300;
+            margin-bottom: 30px;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+            letter-spacing: 0.05em;
+        }
+
+        #open-btn {
+            padding: 12px 40px;
+            font-size: 1.2rem;
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.28s ease;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            box-shadow: 0 6px 18px rgba(255,130,182,0.08);
+        }
+
+        #open-btn:hover {
+            background: linear-gradient(90deg,var(--accent),var(--accent-strong));
+            color: var(--bg);
+            transform: translateY(-2px);
+        }
+
+        /* HERO SECTION - Layar Penuh Pertama */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 300;
+            letter-spacing: -0.05em;
+            margin-bottom: 20px;
+            /* Efek teks gradient: elegant pink */
+            background: linear-gradient(to right, var(--accent), var(--accent-strong));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* HORIZONTAL SCROLL WRAPPER */
+        .horizontal-wrapper {
+            height: 400vh; 
+            position: relative;
+        }
+
+        .horizontal-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Kumpulan "Slide" atau Memori */
+        .gallery {
+            display: flex;
+            gap: 5vw;
+            padding: 0 5vw;
+        }
+
+        .card {
+            width: 80vw;
+            max-width: 400px;
+            height: 60vh;
+            background: var(--card-bg); /* Sedikit lebih terang dari background utama */
+            border-radius: 20px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 12px 36px var(--shadow);
+        }
+
+        .card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        /* Menambahkan sedikit efek zoom saat disentuh/hover */
+        .card:hover img {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 2;
+            background: linear-gradient(to top, var(--overlay-bg), transparent);
+            padding: 20px;
+            margin: -20px;
+        }
+
+        .card-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--paper);
+        }
+
+        .card-content p {
+            color: var(--muted-light);
+            font-size: 0.94rem;
+            line-height: 1.5;
+        }
+
+        /* OUTRO SECTION */
+        .outro {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background-color: #1a1515;
+        }
+        
+        .outro h2 {
+            font-weight: 300;
+            color: var(--accent);
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgm" src="lagu-manis.mp3" loop></audio>
+
+    <div id="intro-overlay">
+        <h2>Ada sesuatu untukmu...</h2>
+        <button id="open-btn">Buka</button>
+    </div>
+
+    <section class="hero">
+        <h1>Selamat Ulang Tahun.</h1>
+        <p>Gulir ke bawah untuk melihat ceritanya</p>
+    </section>
+
+    <div class="horizontal-wrapper">
+        <div class="horizontal-container">
+            <div class="gallery">
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1518199268815-95a17b806141?w=500&q=80" alt="Foto 1">
+                    <div class="card-content">
+                        <h2>Chapter 1</h2>
+                        <p>Awal mula kita saling mengenal.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?w=500&q=80" alt="Foto 2">
+                    <div class="card-content">
+                        <h2>Momen Tak Terduga</h2>
+                        <p>Tertawa tanpa alasan yang jelas.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=500&q=80" alt="Foto 3">
+                    <div class="card-content">
+                        <h2>Kejutan</h2>
+                        <p>Hal-hal kecil yang selalu aku ingat.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500&q=80" alt="Foto 4">
+                    <div class="card-content">
+                        <h2>Hari Ini</h2>
+                        <p>Merayakan kamu dan semua hal baik tentangmu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="outro">
+        <h2>Semoga tahun ini membawa lebih banyak tawa.<br>Aku sayang kamu.</h2>
+    </section>
+
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        // 1. INISIALISASI LENIS
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+        });
+
+        // KUNCI SCROLL SAAT HALAMAN PERTAMA DIMUAT
+        lenis.stop(); 
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 2. REGISTRASI SCROLLTRIGGER
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 3. LOGIKA UNLOCK RITUAL (TOMBOL BUKA)
+        const openBtn = document.getElementById('open-btn');
+        const overlay = document.getElementById('intro-overlay');
+        const bgm = document.getElementById('bgm');
+
+        openBtn.addEventListener('click', () => {
+            // Memutar musik (Pastikan file lagu-manis.mp3 ada di folder yang sama)
+            // Menggunakan try-catch untuk berjaga-jaga jika file audio belum tersedia
+            try {
+                bgm.play();
+            } catch (e) {
+                console.log("Audio file belum siap atau diblokir browser.");
+            }
+
+            // Membuka kunci scroll
+            lenis.start(); 
+
+            // Menghilangkan overlay secara perlahan
+            gsap.to(overlay, {
+                opacity: 0,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    overlay.style.display = "none";
+                    
+                    // Memicu animasi teks H1 dan P hanya SETELAH overlay hilang
+                    gsap.from(".hero h1", { 
+                        opacity: 0, 
+                        y: 30, 
+                        duration: 1.5, 
+                        ease: "power3.out" 
+                    });
+                    gsap.from(".hero p", { 
+                        opacity: 0, 
+                        y: 20,
+                        duration: 1.5, 
+                        delay: 0.3,
+                        ease: "power3.out"
+                    });
+                }
+            });
+        });
+
+        // 4. LOGIKA CINEMATIC HORIZONTAL SCROLL
+        const gallery = document.querySelector('.gallery');
+        
+        function getScrollAmount() {
+            let galleryWidth = gallery.scrollWidth;
+            return -(galleryWidth - window.innerWidth);
+        }
+
+        const tween = gsap.to(gallery, {
+            x: getScrollAmount,
+            ease: "none"
+        });
+
+        ScrollTrigger.create({
+            trigger: ".horizontal-wrapper",
+            start: "top top", 
+            end: () => `+=${getScrollAmount() * -1}`, 
+            pin: ".horizontal-container", 
+            animation: tween,
+            scrub: 1, 
+            invalidateOnRefresh: true 
+        });
+    </script>
+</body>
+</html>
