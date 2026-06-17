@@ -264,7 +264,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            padding: 18vh 0 6vh;
+            padding: 10vh 0 1vh; /* further reduce bottom padding so outro sits closer */
         }
 
         .montage-title {
@@ -340,20 +340,43 @@
         .outro {
             min-height: 60vh;
             display: flex;
+            flex-direction: column;
             justify-content: flex-start;
-            align-items: flex-start;
+            align-items: center;
             text-align: center;
-            padding: 36px 20px 20px;
+            padding: 6px 20px 2cqi; /* reduce top padding to move up */
+            margin-top: -72px; /* pull the section upwards to sit closer to montage */
             background-color: var(--bg);
         }
+
+        .outro .outro-heading {
+            margin: 0 auto 12px;
+            font-size: clamp(1.8rem, 4.2vw, 3.2rem);
+            color: var(--soft-pink);
+            font-weight: 800;
+            text-align: center;
+            text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transform: translateY(12px);
+            animation: slideUpFade 0.9s cubic-bezier(.22,.9,.26,1) 0.15s both;
+        }
+
+        @keyframes slideUpFade {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         
-        .outro h2 {
-            margin: 0 auto;
-            max-width: 780px;
-            font-weight: 300;
+        .outro .outro-text {
+            margin: 6px auto 0;
+            max-width: min(85vw, 900px);
+            font-weight: 400;
             color: var(--paper);
-            line-height: 1.4;
-            font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+            line-height: 1.6;
+            font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+            text-align: center;
+            padding: 6px 12px;
+            white-space: pre-wrap;
         }
 
         @media (max-width: 980px) {
@@ -400,11 +423,16 @@
             }
 
             .outro {
-                padding: 30px 16px 16px;
+                padding: 14px 16px 16px;
+                margin-top: -56px;
             }
 
-            .outro h2 {
-                font-size: clamp(1.6rem, 5vw, 2.2rem);
+            .outro .outro-heading {
+                font-size: clamp(1.6rem, 4.2vw, 2.4rem);
+            }
+
+            .outro .outro-text {
+                font-size: clamp(0.95rem, 2.6vw, 1.05rem);
             }
         }
 
@@ -450,11 +478,16 @@
 
             .outro {
                 min-height: auto;
-                padding: 24px 14px 18px;
+                padding: 10px 14px 16px;
+                margin-top: -36px;
             }
 
-            .outro h2 {
-                font-size: clamp(1.4rem, 6vw, 2rem);
+            .outro .outro-heading {
+                font-size: clamp(1.2rem, 7.6vw, 1.7rem);
+            }
+
+            .outro .outro-text {
+                font-size: clamp(0.9rem, 4.8vw, 1rem);
             }
         }
     </style>
@@ -476,11 +509,11 @@
         </svg>
 
         <p class="story-line seq-1">Hari ini, dunia sedang merayakan salah satu orang yang paling pantas untuk bahagia.</p>
-        <p class="story-line seq-2">Hanya sebuah pesan singkat untuk seseorang yang sedang bertambah usia,</p>
-        <p class="story-line seq-3">Bukan lagi 'kita', tapi doaku untukmu tidak pernah berubah,</p>
+        <p class="story-line seq-2">sebuah pesan singkat untuk seseorang yang sedang bertambah usia,</p>
+        <p class="story-line seq-3">no longer "us", but I will always pray for you,</p>
         <h2 class="story-highlight seq-3">SELAMAT ULANG TAHUN KE-19</h2>
         
-        <button id="open-btn">HAII!!</button>
+        <button id="open-btn">Click Here!</button>
     </div>
 
     <section class="netflix-hero">
@@ -514,7 +547,7 @@
             </div>
         </div>
 
-        <div class="age-rating">18+</div>
+        <div class="age-rating">19</div>
     </section>
 
     <div class="montage-wrapper" id="cerita">
@@ -524,7 +557,8 @@
     </div>
 
     <section class="outro" id="outro">
-        <h2>Terima kasih untuk semuanya...<br>Semoga kamu selalu bahagia.</h2>
+        <h2 class="outro-heading">Selamat ulang tahun yaa!!</h2>
+        <p class="outro-text">Deep Down we both know we are meant for each other right? aku bersyukur banget kamu bisa ada di dunia ini, di hidup aku, jadi salah satu bagian paling penting di hidup aku, terimakasih pernah ada pernah nemenin aku buat capai semua yang aku dapetin sampe sekarang aku tau aku tumbuh banyak waktu bareng sama kamu aku jadiin kamu tujuan aku, aku dapet support, motivasi dan semua hal yang bikin aku bersyukur banget bisa sampe di titik ini, aku ngerasa ternyata kamu se meaningfull itu di hidup aku secara ga langsung dan tanpa aku sadari kamu selalu ada nemenin aku kalo cape, kadang tuh aku sedih dan mikir kedepannya kalo misalnya aku achiev something aku seneng banget pasti tapi yang bikin aku sedih aku udah ga sama kamu lagi padahal kamu yang banyak nemenin dari awalnya dimana aku start dimana aku grinding berkembang step by step tapi sekarang aku udah setengah maju tapi kita udah ga bareng lagi, mungkin aku emang cuma masih denial aja sama semuanyaa aku selalu coba acceptance aku tau aku sedih banget, mungkin sekarang udah telat dan aku cuma mau ngabisin sisa sisa perasaan aku aja buat tetep ngagumin kamu, kadang aku ketemu kamu juga di mimpi and we fix everything but that just a dream right now,one day maybe kalo kamu balik lagi dan nemuin aku, aku bakal dengan senang hati ceritain semua  hal yang ga aku lakuin setelah ga sama kamu kalo misalnya aku bisa ketemu kamu lagi buat satu hari aja aku pasti bakal lakuin dan ngobrolin semua hal yang pengen aku obrolin seharian penuh mungkin kalo kamu berkenan maybe for the last yaa, sometimes i wish kita masih bisa jadi temenan aku bakal buang semua ego aku buat kaya gini karena aku emang beneran sesayang itu ternyata, aku gatau apa yang kamu rasain tapi, sorry buat semua yang udah aku lakuin, semua hal yang udah buat kamu kecewa, buat kamu nangis sendirian sampe malem, buat semua hal yang bikin kamu ngerasa cape dan nguras energi kamu, aku perbaiki diri aku dulu yaa, and maybe sampe di titik dimana kamu nemu alasan buat balik sama aku mungkin? ahaha just yearning ,kadang kalo aku kangen aku selalu berdoa buat kamu , semogaa kamu selalu bahagia, you got your spark back again, sembuh dari semua hal yang gabisa kamu ungkapin, may peace be upon you<3</p>
     </section>
 
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
