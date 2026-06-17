@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>A Special Day</title>
     <style>
         /* =========================================
@@ -24,11 +24,21 @@
             --dark-plum: #170a10; 
         }
 
+        html {
+            min-height: 100%;
+            background-color: var(--bg);
+        }
+
         body {
+            min-height: 100%;
             background-color: var(--bg);
             color: var(--paper);
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             overflow-x: hidden;
+        }
+
+        :root {
+            --vh: 1vh;
         }
 
         /* =========================================
@@ -39,7 +49,7 @@
             top: 0;
             left: 0;
             width: 100vw;
-            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
             background-color: var(--dark-plum); 
             z-index: 9999;
             display: flex;
@@ -137,7 +147,7 @@
            ========================================= */
         .netflix-hero {
             position: relative;
-            height: 100vh;
+            height: calc(var(--vh, 1vh) * 100);
             width: 100vw;
             display: flex;
             align-items: center;
@@ -257,7 +267,7 @@
            ========================================= */
         .montage-wrapper {
             position: relative;
-            min-height: 100vh;
+            min-height: calc(var(--vh, 1vh) * 100);
             width: 100vw;
             background-color: var(--bg);
             overflow: hidden;
@@ -642,6 +652,13 @@
             hero.style.backgroundPosition = 'center';
             bgVideo.style.display = 'none';
         });
+
+        function setVh() {
+            document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`);
+        }
+
+        setVh();
+        window.addEventListener('resize', setVh);
     </script>
 </body>
 </html>
